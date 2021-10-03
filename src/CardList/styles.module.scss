@@ -51,6 +51,13 @@
     }
 }
 
+.card_headers{
+    text-transform: uppercase;
+    text-align: left;
+    display:grid;
+    grid-template-columns: 2fr 1fr 1fr 2fr;
+}
+
 .card_btn{
     display: flex;
     align-items: center;

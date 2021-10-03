@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { Status, Summary } from '../types';
 import ErrorBoundery from '../ErrorBoundary';
 import styles from './styles.module.scss';
@@ -8,6 +8,11 @@ interface Props {
 }
 
 const CardList:FC<Props> = ({ cardItems }:Props) => {
+  const [sortField, setSortField] = useState('id');
+  useEffect(() => {
+    console.log(sortField);
+  }, [sortField]);
+
   const getTextColor = (itemStatus:string) => {
     switch (itemStatus) {
       case Status.DRAFT:
@@ -21,11 +26,42 @@ const CardList:FC<Props> = ({ cardItems }:Props) => {
     }
   };
 
+  const TableHeader = () => (
+    <div className={styles.card_headers}>
+      <div
+        role="button"
+        tabIndex={0}
+        onClick={() => setSortField('name')}
+        onKeyUp={() => setSortField('name')}
+      >
+        name
+      </div>
+      <div
+        role="button"
+        tabIndex={0}
+        onClick={() => setSortField('type')}
+        onKeyUp={() => setSortField('type')}
+      >
+        type
+      </div>
+      <div
+        role="button"
+        tabIndex={0}
+        onClick={() => setSortField('status')}
+        onKeyUp={() => setSortField('status')}
+      >
+        status
+      </div>
+      <div>site</div>
+      <div />
+    </div>
+  );
+
   const cardArray = cardItems.map((item) => {
     const isDraft = item.status === Status.DRAFT;
     return (
       <ErrorBoundery key={item.id}>
-        {/* обернуть в ссылку */}
+        {/* TODO обернуть в ссылку */}
         <li className={styles.card}>
           <div className={styles.card_info}>{item.name}</div>
           <div className={styles.card_info}>{item.type}</div>
@@ -41,7 +77,12 @@ const CardList:FC<Props> = ({ cardItems }:Props) => {
       </ErrorBoundery>
     );
   });
-  return (<ul className={styles.list}>{cardArray}</ul>);
+  return (
+    <>
+      <TableHeader />
+      <ul className={styles.list}>{cardArray}</ul>
+    </>
+  );
 };
 
 export default CardList;
