@@ -1,6 +1,5 @@
 import React, { Component, ErrorInfo, ReactNode } from 'react';
 
-// это я конечно же нагуглил
 interface Props {
   children: ReactNode;
 }
